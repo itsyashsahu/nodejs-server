@@ -1,6 +1,54 @@
 import { NextFunction, Request, Response } from "express";
-
 import ErrorResponse from "../interfaces/ErrorResponse";
+import { Schema } from "joi";
+
+export const validateRequestBody = (schema) => {
+  return (req, res, next) => {
+    const result = schema.validate(req.body);
+    if (result.error) {
+      return res.status(400).json({
+        error: result.error.details[0].message,
+      });
+    }
+    if (!req.value) {
+      req.value = {};
+    }
+    req.value["body"] = result.value;
+    next();
+  };
+};
+
+export const validateQueryParameters = (schema:Schema) => {
+  return (req, res, next) => {
+    const result = schema.validate(req.query);
+    if (result.error) {
+      return res.status(400).json({
+        error: result.error.details[0].message,
+      });
+    }
+    if (!req.value) {
+      req.value = {};
+    }
+    req.value["body"] = result.value;
+    next();
+  };
+};
+
+export const validateParams = (schema:Schema) => {
+  return (req, res, next) => {
+    const result = schema.validate(req.params);
+    if (result.error) {
+      return res.status(400).json({
+        error: result.error.details[0].message,
+      });
+    }
+    if (!req.value) {
+      req.value = {};
+    }
+    req.value["body"] = result.value;
+    next();
+  };
+};
 
 export function notFound(req: Request, res: Response, next: NextFunction) {
   res.status(404);
