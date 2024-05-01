@@ -1,6 +1,6 @@
 interface CharacterOrigin {
     name: string;
-    url: string;
+    url?: string;
 }
 
 interface CharacterLocation {
