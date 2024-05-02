@@ -51,7 +51,7 @@ You can change it by adding the .env files the .env.example is present to help y
 
 This project is deployed on the vercel
 
-[Cartoonify API ](https://nodejs-server-kappa.vercel.app/){:target="_blank"}
+<a href="https://nodejs-server-kappa.vercel.app/" target="_blank">Cartoonify API </a>
 
 ```bash
 https://nodejs-server-kappa.vercel.app/
@@ -65,7 +65,8 @@ Once the server is running locally or deployed, you can access the following end
 
 Go around and explore the API's in the Postman Schema
 
-[Postman Schema](https://www.postman.com/lunar-resonance-819866/workspace/side-projects/request/24279670-f4ba7209-6d6d-42b2-9a4f-555fcc97d20b?tab=overview){:target="_blank"}
+<a href="https://www.postman.com/lunar-resonance-819866/workspace/side-projects/request/24279670-f4ba7209-6d6d-42b2-9a4f-555fcc97d20b?tab=overview" target="_blank">Postman Schema</a>
+
 
 ```bash
 https://www.postman.com/lunar-resonance-819866/workspace/side-projects/request/24279670-f4ba7209-6d6d-42b2-9a4f-555fcc97d20b?tab=overview
