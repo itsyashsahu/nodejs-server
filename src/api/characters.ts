@@ -34,7 +34,7 @@ interface CharacterQueryParams {
 }
 
 const formatCharacterData = (characters:CharacterFetched[], additionalData:boolean=false) : Partial<CharacterFetched>[]=> {
-    let minimalCharacterKeys: (keyof CharacterFetched)[] = ['id', 'name', 'image'];
+    let minimalCharacterKeys: (keyof CharacterFetched)[] = ['id', 'name', 'image','species'];
     if(additionalData){
         minimalCharacterKeys = ['id', 'name', 'image','species','origin','status','episode','gender']
     }
