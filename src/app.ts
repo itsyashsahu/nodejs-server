@@ -19,6 +19,11 @@ app.use(cors());
 //-------------------------------------
 
 app.use("/api/v1", api);
+app.use("/", (req,res)=>{
+    return res.json({
+        message: "API V1",
+      });
+});
 
 
 app.use(middlewares.notFound);
