@@ -15,14 +15,14 @@ This repository contains a Node.js Express server implemented in TypeScript, uti
 1. Clone the repository:
 
 ``` bash
-git clone https://github.com/your-username/express-typescript-joi.git
+git clone https://github.com/itsyashsahu/nodejs-server.git
 ```
 
 Or download the repository manually and extract it.
 
 2. Navigate to the project directory:
 ``` bash
-cd express-typescript-joi
+cd nodejs-server
 ```
 
 3. Install dependencies using Yarn:
