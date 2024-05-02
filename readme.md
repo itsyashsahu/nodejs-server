@@ -50,6 +50,9 @@ You can change it by adding the .env files the .env.example is present to help y
 3. You can now access the server by visiting http://localhost:5000 in your web browser or using tools like Postman.
 
 This project is deployed on the vercel
+
+[Cartoonify API ](https://nodejs-server-kappa.vercel.app/)
+
 ```bash
 https://nodejs-server-kappa.vercel.app/
 ```
@@ -61,6 +64,9 @@ Once the server is running locally or deployed, you can access the following end
 - /characters/:id  : Returns details of a specific character by ID.
 
 Go around and explore the API's in the Postman Schema
+
+[Postman Schema](https://www.postman.com/lunar-resonance-819866/workspace/side-projects/request/24279670-f4ba7209-6d6d-42b2-9a4f-555fcc97d20b?tab=overview)
+
 ```bash
 https://www.postman.com/lunar-resonance-819866/workspace/side-projects/request/24279670-f4ba7209-6d6d-42b2-9a4f-555fcc97d20b?tab=overview
 ```
