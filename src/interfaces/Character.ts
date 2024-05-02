@@ -22,3 +22,13 @@ export interface CharacterFetched {
     url: string;
     created: string;
 }
+
+export interface CharacterQueryParams {
+    page?: number;
+    pageSize?: number;
+    name?: string;
+    status?:string;
+    species?:string;
+    type?:string;
+    gender?:string;
+}

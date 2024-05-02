@@ -1,85 +1,15 @@
 import express from 'express';
 import AxiosInstance from '../utils/axiosInstance';
-import { CharacterFetched } from '../interfaces/Character';
+import { CharacterFetched, CharacterQueryParams } from '../interfaces/Character';
 import { AxiosResponse } from '../interfaces/AxiosResponse';
 import { Request } from 'express';
-import Joi from 'joi';
 import { validateParams, validateQueryParameters } from '../middleware/utils';
+import { AllCharactersFetched, CharacterResponse, characterParamsType } from '../types/characters';
+import { characterParamsSchema, characterSchema } from '../schemas/character';
+import { calculatePaginationInfo, formatCharacterData } from '../utils/character';
 const router = express.Router();
 
-type CharacterResponse = {
-    success: Boolean,
-    message: String, 
-    data: any,
-};
-
-type AllCharactersFetched = {
-    info:{
-        count: number,
-        pages: number,
-        next: String | null, 
-        prev: String | null
-    },
-    results: CharacterFetched[]
-}
-
-interface CharacterQueryParams {
-    page?: number;
-    pageSize?: number;
-    name?: string;
-    status?:string;
-    species?:string;
-    type?:string;
-    gender?:string;
-}
-
-const formatCharacterData = (characters:CharacterFetched[], additionalData:boolean=false) : Partial<CharacterFetched>[]=> {
-    let minimalCharacterKeys: (keyof CharacterFetched)[] = ['id', 'name', 'image','species'];
-    if(additionalData){
-        minimalCharacterKeys = ['id', 'name', 'image','species','origin','status','episode','gender']
-    }
-    const formattedCharacters = characters.map(character => {
-        const minimalCharacter: Partial<CharacterFetched> = {}; // Partial to allow missing keys
-        minimalCharacterKeys.forEach((key:string) => {
-            minimalCharacter[key] = character[key] as CharacterFetched[keyof CharacterFetched]
-            if(key=='episode' && character[key].length>1){
-                minimalCharacter[key] = [character[key][0]]
-            }else if(key == 'origin' && character[key]){
-                minimalCharacter[key] = {"name":character[key]['name']}
-            }
-        });
-        return minimalCharacter;
-    });
-    return formattedCharacters;
-}
-
-const calculatePaginationInfo = (pageNumber:number, pageSize:number) => {
-    const firstItemIndex:number = (pageNumber-1)*pageSize   // excluded
-    const lastItemIndex: number = (pageNumber)*pageSize     // Included
-    const startFetchPage:number = Math.floor(firstItemIndex/20)    // excluded
-    const lastFetchPage:number = Math.ceil(lastItemIndex/20)    // Included
-
-    const startingIndex:number = firstItemIndex - 20*(startFetchPage)
-    const lastIndex:number = Number(startingIndex) + Number(pageSize)
-    return {
-        startingIndex,
-        lastIndex,
-        startFetchPage,
-        lastFetchPage
-    }
-}
-
-const schema = Joi.object({
-    page: Joi.number().greater(0).default(1),
-    pageSize: Joi.number().greater(0).default(10),
-    name: Joi.string().optional().default(""),
-    status: Joi.string().optional().valid('alive','dead','unknown','').default(""),
-    species: Joi.string().optional().default(""),
-    type: Joi.string().optional().default(""),
-    gender: Joi.string().optional().valid('female','male','genderless','unknown','').default(""),
-});
-
-router.get<{}, CharacterResponse>('/', validateQueryParameters(schema), async (req:Request<{},CharacterResponse,{},CharacterQueryParams,{}>, res) => {
+router.get<{}, CharacterResponse>('/', validateQueryParameters(characterSchema), async (req:Request<{},CharacterResponse,{},CharacterQueryParams,{}>, res) => {
     try{
         const { page = 1, pageSize = 10, name = "",status="", species="", type="", gender="" }:CharacterQueryParams = req.query;
         let {startFetchPage, lastFetchPage, startingIndex, lastIndex} = calculatePaginationInfo(page, pageSize)
@@ -137,14 +67,7 @@ router.get<{}, CharacterResponse>('/', validateQueryParameters(schema), async (r
     }
 });
 
-
-type ParamsSchema = {
-    id:number
-}
-const paramsSchema = Joi.object({
-    id: Joi.number().greater(0).default(1),
-});
-router.get<ParamsSchema, CharacterResponse>('/:id', validateParams(paramsSchema), async (req:Request<ParamsSchema, CharacterResponse, {},{} > ,res )=>{
+router.get<characterParamsType, CharacterResponse>('/:id', validateParams(characterParamsSchema), async (req:Request<characterParamsType, CharacterResponse, {},{} > ,res )=>{
     try{
         const {id:characterId} = req.params
 
