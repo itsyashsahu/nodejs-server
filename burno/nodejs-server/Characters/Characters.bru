@@ -1,0 +1,25 @@
+meta {
+  name: Characters
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{BASE_URL}}/characters?page=2&pageSize=10
+  body: none
+  auth: awsv4
+}
+
+params:query {
+  page: 2
+  pageSize: 10
+}
+
+assert {
+  : isJson true
+}
+
+docs {
+  This is the request for the best characters
+  
+}
