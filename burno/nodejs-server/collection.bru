@@ -1,0 +1,14 @@
+tests {
+  // status code test
+  test("status code test", function(){
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(200)
+  })
+  
+  //same data type test
+  test("same data type test", function(){
+    const data = res.getBody();
+    expect(data.success).to.be.a('boolean')
+  })
+  
+}
