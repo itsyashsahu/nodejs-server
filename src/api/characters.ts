@@ -16,7 +16,6 @@ router.get<{}, CharacterResponse>('/', validateQueryParameters(characterSchema),
         
         const urlWithSearchParams = `/character?&name=${name}&status=${status}&species=${species}&type=${type}&gender=${gender}`
         const checkCountRes: AxiosResponse<AllCharactersFetched> = await AxiosInstance.get(urlWithSearchParams)
-        console.log("🚀 ~ router.get<{},CharacterResponse> ~ checkCountRes:", checkCountRes)
         const totalPagesInAPI = checkCountRes.data.info.pages
         const totalRecords = checkCountRes.data.info.count
         const totalPages = Math.ceil(totalRecords/pageSize)
